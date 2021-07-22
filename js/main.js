@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+	//Здесь мы раскладываем вводный данные по отдельный инпутам
     $('#main-submit').on('click', function() {
 		var mainInput = $('#main-input').val();
 		mainInput = mainInput.replace(/,/g, '');
@@ -59,15 +60,10 @@ $( document ).ready(function() {
 			}	
 		});
 
-	/*var $tmp = $("<textarea>");
-	$("body").append($tmp);
-	$tmp.val($('#main-input').val()).select();
-	document.execCommand("copy");
-	$tmp.remove();*/
-		
 		
 	});
 
+    //обращаемся в CRM через API и получаем объект
 	$('#get-property').on('click', function() {
 		var address = $('#address').val();
 		if(address.indexOf(', ул') + 1) {
@@ -108,22 +104,22 @@ $( document ).ready(function() {
 		}
 
 		if($('#select option').filter(':selected').val() == "0") {
-			$.post("https://kluch.me/lead_edit/example/edit/getStock.php", { price: $('#price').val(), street: $('#address').val(), zhk: $('#zhk').val() }, function(data) {
+			$.post("../php/getStock.php", { price: $('#price').val(), street: $('#address').val(), zhk: $('#zhk').val() }, function(data) {
 			  	$('.properties-info').empty().append(data);
 			});
 		}
 		else if($('#select option').filter(':selected').val() == "1") {
-			$.post("https://kluch.me/lead_edit/example/edit/getStock1.php", { price: $('#price').val(), street: $('#address').val() }, function(data) {
+			$.post("../php/getStock1.php", { price: $('#price').val(), street: $('#address').val() }, function(data) {
 			  	$('.properties-info').empty().append(data);
 			});
 		}
 		else if($('#select option').filter(':selected').val() == "2") {
-			$.post("https://kluch.me/lead_edit/example/edit/getStock2.php", { price: $('#price').val(), street: $('#address').val() }, function(data) {
+			$.post("../php/getStock2.php", { price: $('#price').val(), street: $('#address').val() }, function(data) {
 			  	$('.properties-info').empty().append(data);
 			});
 		}
 		else {
-			$.post("https://kluch.me/lead_edit/example/edit/getStock3.php", { price: $('#price').val(), street: $('#address').val() }, function(data) {
+			$.post("../php/getStock3.php", { price: $('#price').val(), street: $('#address').val() }, function(data) {
 			  	$('.properties-info').empty().append(data);
 			});
 		}
@@ -133,10 +129,8 @@ $( document ).ready(function() {
 		$('#send-form').prop('disabled', false);
 	});
 
-	$('#pr-line').on('change', function() {
-		console.log('You clicked to property');
-	});
 	
+	//Отправка заявки в CRM с помощью POST запроса
 	$('#send-form').on('click', function() {
 	   $('#send-form').prop('disabled', true); 
 	   $('#send-form').text('Заявка успешно создана');
@@ -154,7 +148,7 @@ $( document ).ready(function() {
 	        $('.main-input').val('');
 	   }
 	   if($('#select option').filter(':selected').val() == "0") {
-    	   $.post("https://kluch.me/lead_edit/example/edit/addRequest.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), house: $('#house').val(), price: $('#price').val(), rooms: $('#rooms').val(), floor: $('#floor').val(), area: $('#area').val(), canal: $('#canal').val(), agent: $('#agent').val(), payform: $('#payform_input').val(), comment: $('#comment').val() }, function(data) {
+    	   $.post("../php/addRequest.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), house: $('#house').val(), price: $('#price').val(), rooms: $('#rooms').val(), floor: $('#floor').val(), area: $('#area').val(), canal: $('#canal').val(), agent: $('#agent').val(), payform: $('#payform_input').val(), comment: $('#comment').val() }, function(data) {
     	      if(data == 'success') {
     	          $('.send-result').addClass('send-success');
     	          $('.send-result span').text('Заявка успешно создана!');
@@ -168,7 +162,7 @@ $( document ).ready(function() {
     	   });
 	   }
 	   else if($('#select option').filter(':selected').val() == "1") {
-	      $.post("https://kluch.me/lead_edit/example/edit/addRequest1.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), house: $('#house').val(), price: $('#price').val(), floor: $('#floor').val(), area: $('#area').val(), canal: $('#canal').val(), agent: $('#agent').val(), comment: $('#comment').val() }, function(data) {
+	      $.post("../php/addRequest1.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), house: $('#house').val(), price: $('#price').val(), floor: $('#floor').val(), area: $('#area').val(), canal: $('#canal').val(), agent: $('#agent').val(), comment: $('#comment').val() }, function(data) {
     	      if(data == 'success') {
     	          $('.send-result').addClass('send-success');
     	          $('.send-result span').text('Заявка успешно создана!');
@@ -182,7 +176,7 @@ $( document ).ready(function() {
     	   }); 
 	   }
 	   else if($('#select option').filter(':selected').val() == "2") {
-	      $.post("https://kluch.me/lead_edit/example/edit/addRequest2.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), house: $('#house').val(), price: $('#price').val(), area: $('#area').val(), land_area: $('#land_area').val(), canal: $('#canal').val(), agent: $('#agent').val(), payform: $('#payform_input').val(), comment: $('#comment').val() }, function(data) {
+	      $.post("../php/addRequest2.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), house: $('#house').val(), price: $('#price').val(), area: $('#area').val(), land_area: $('#land_area').val(), canal: $('#canal').val(), agent: $('#agent').val(), payform: $('#payform_input').val(), comment: $('#comment').val() }, function(data) {
     	      if(data == 'success') {
     	          $('.send-result').addClass('send-success');
     	          $('.send-result span').text('Заявка успешно создана!');
@@ -196,7 +190,7 @@ $( document ).ready(function() {
     	   }); 
 	   }
 	   else {
-	      $.post("https://kluch.me/lead_edit/example/edit/addRequest3.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), price: $('#price').val(), canal: $('#canal').val(), comment: $('#comment').val() }, function(data) {
+	      $.post("../php/addRequest3.php", { name: $('#name').val(), phone: $('#contact_phone').val(), employee_id: objectEmId, object_id: objectId, street: $('#address').val(), price: $('#price').val(), canal: $('#canal').val(), comment: $('#comment').val() }, function(data) {
     	      if(data == 'success') {
     	          $('.send-result').addClass('send-success');
     	          $('.send-result span').text('Заявка успешно создана!');
@@ -211,6 +205,7 @@ $( document ).ready(function() {
 	   }
 	});
 	
+	//обрабатываем кнопки быстрого выбора (возле верхнего инпута)
 	$('#realtor').on('click', function() {
 	    $('#agent').val('риелтор');
 	});
@@ -227,7 +222,7 @@ $( document ).ready(function() {
 	    $('#comment').val('интересует обмен'); 
 	});
 	
-	
+	//Здесь список жилых комплексов Казани, но вы можете использовать свой. Он используется для автозаполнения по полю новостроек
     var zhks = [
 	'Аппарт-отель по ул. Пушкина, 26',
 	'Город-парк «Новые горки»',
